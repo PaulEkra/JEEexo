@@ -14,6 +14,7 @@ public class Message {
     private Long idMessage;
 
     private String contenu;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnvoi;
     private String sujet;
 

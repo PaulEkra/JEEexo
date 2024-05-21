@@ -93,6 +93,13 @@
                 <p:separator/>
                 <p:menuitem icon="pi pi-calendar" value="Gestion des congés"
                             outcome="/views/admin/responsable/listConge.xhtml " styleClass="#{loginController.isActive('/views/admin/responsable/listConge.xhtml') ? ' active-menu-item' : 'menu-item'}"/>
+                <p:separator/>
+                <p:menuitem icon="pi pi-calendar" value="Historique demande congé"
+                            outcome="/views/admin/responsable/historiqueConge.xhtml " styleClass="#{loginController.isActive('/views/admin/responsable/historiqueConge.xhtml') ? 'active-menu-item' : 'menu-item'}"/>
+                <p:separator/>
+                <p:menuitem icon="pi pi-message" value="Messagerie interne"
+                            outcome="/views/admin/responsable/MessageInterne.xhtml " styleClass="#{loginController.isActive('/views/admin/responsable/MessageInterne.xhtml') ? ' active-menu-item' : 'menu-item'}"/>
+
             </p:menu>
 
 

@@ -4,6 +4,8 @@ import com.example.applicationgestinemployes.model.Conge;
 import com.example.applicationgestinemployes.model.Employe;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -59,7 +61,7 @@ public class CongeService {
     }
 
     public List<Conge> findAllPending() {
-        return em.createQuery("SELECT c FROM Conge c WHERE c.statut = 'EN_ATTENTE'", Conge.class).getResultList();
+        return em.createQuery("SELECT c FROM Conge c WHERE c.statut = 'en attente'", Conge.class).getResultList();
     }
     public List<Conge> getAllConges() {
         return em.createQuery("SELECT c FROM Conge c", Conge.class).getResultList();

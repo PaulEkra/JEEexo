@@ -43,7 +43,7 @@
                         <p:inputText id="adresse" value="#{employeController.selectedEmploye.adresse}"/>
 
                         <p:outputLabel for="numeroTelephone" value="N° Téléphone:"/>
-                        <p:inputText id="numeroTelephone" value="#{employeController.selectedEmploye.numeroTelephone}"/>
+                        <p:inputText id="numeroTelephone" value="#{employeController.selectedEmploye.numeroTelephone}" required="true"/>
 
                         <p:outputLabel for="courriel" value="Courriel:"/>
                         <p:inputText id="courriel" value="#{employeController.selectedEmploye.courriel}" type="email"  required="true"/>

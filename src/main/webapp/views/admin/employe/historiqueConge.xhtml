@@ -14,7 +14,7 @@
     <ui:define name="main">
         <p:outputPanel id="container" styleClass="container">
             <div class="title">Historique des Congés</div>
-            <p:dataTable var="conge" value="#{congeController.historiqueCongesUtilisateurConnecte}" emptyMessage="Aucun congé trouvé">
+            <p:dataTable var="conge" value="#{congeController.historiqueCongesUtilisateurConnecte}" emptyMessage="Aucun congé trouvé" rows="10" paginator="true" rowsPerPageTemplate="5,10,15">
                 <p:column headerText="Date de début">
                     <h:outputText value="#{conge.dateDebut}">
                         <f:convertDateTime pattern="dd/MM/yyyy" />

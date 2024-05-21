@@ -5,6 +5,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
+import jakarta.transaction.Transactional;
 
 @RequestScoped
 public class MessageService {
@@ -29,5 +30,10 @@ public class MessageService {
 
     public List<Message> findAll() {
         return em.createQuery("SELECT m FROM Message m", Message.class).getResultList();
+    }
+
+    @Transactional
+    public void saveMessage(Message message) {
+        em.persist(message);
     }
 }

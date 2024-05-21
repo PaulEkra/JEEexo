@@ -7,29 +7,19 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/resources/tpl/adminEmploye.xhtml">
 
-    <ui:define name="title">
-        <title>Historique des Congés</title>
-    </ui:define>
 
+    <ui:define name="title">
+    </ui:define>
     <ui:define name="main">
         <p:outputPanel id="container" styleClass="container">
-            <div class="title">Historique des Congés</div>
+            <div class="title">Boites de receptions</div>
             <p:dataTable var="conge" value="#{congeController.historiqueCongesUtilisateurConnecte}" emptyMessage="Aucun congé trouvé" rows="10" paginator="true" rowsPerPageTemplate="5,10,15">
-                <p:column headerText="Date de début">
-                    <h:outputText value="#{conge.dateDebut}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:outputText>
+                <p:column headerText="Expediteur">
                 </p:column>
-                <p:column headerText="Date de fin">
-                    <h:outputText value="#{conge.dateFin}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:outputText>
+                <p:column headerText="Sujet">
                 </p:column>
-                <p:column headerText="Motif">
-                    <h:outputText value="#{conge.motif}" />
-                </p:column>
-                <p:column headerText="Statut">
-                    <h:outputText value="#{conge.statut}" />
+                <p:column headerText="Action">
+                    <p:commandButton value="Voir" icon="pi pi-check" action="#{congeController.approuverConge(conge.idConge)}" id="btnForm1" process="@this" ajax="false" style="color: green;"/>
                 </p:column>
             </p:dataTable>
         </p:outputPanel>

@@ -23,6 +23,8 @@ public class CongeController implements Serializable {
     @Inject
     private CongeService congeService;
 
+    private Conge selectedConge = new Conge();
+
     @Inject
     private EmployeService employeService;
 
@@ -50,9 +52,16 @@ public class CongeController implements Serializable {
         }
 
         newConge.setEmploye(employe);
-        newConge.setStatut("EN_ATTENTE");
+        newConge.setStatut("en attente");
         congeService.create(newConge);
-
+        // Envoyer une notification par e-mail au responsable
+        if (employe.getResponsable() != null) {
+            String managerEmail = employe.getResponsable().getCourriel();
+            String employeeName = employe.getNom();
+            String leaveStartDate = newConge.getDateDebut().toString();
+            String leaveEndDate = newConge.getDateFin().toString();
+            congeService.sendLeaveRequestNotificationToManager(managerEmail, employeeName, leaveStartDate, leaveEndDate);
+        }
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Demande de congé soumise avec succès."));
         newConge = new Conge();
@@ -70,6 +79,14 @@ public class CongeController implements Serializable {
     public void rejeterConge(Long congeId) {
         congeService.rejeterConge(congeId);
         pendingConges = congeService.findAllPending(); // Rafraîchir la liste
+    }
+
+    public Conge getSelectedConge() {
+        return selectedConge;
+    }
+
+    public void setSelectedConge(Conge selectedConge) {
+        this.selectedConge = selectedConge;
     }
 
 
@@ -114,9 +131,12 @@ public class CongeController implements Serializable {
             }
             return historiqueConges;
         } else {
-            return null;
+            List<Conge> tousConges = congeService.getAllConges();
+            return new ArrayList<>(tousConges);
         }
     }
+
+
 
 
 }

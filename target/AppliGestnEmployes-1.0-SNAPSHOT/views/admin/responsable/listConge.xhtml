@@ -41,12 +41,15 @@
                         <p:column headerText="Statut">
                             <h:outputText value="#{conge.statut}" />
                         </p:column>
-                        <p:column headerText="Statut Debug">
-                            <h:outputText value="#{conge.statut}" />
-                        </p:column>
                         <p:column headerText="Actions">
-                            <p:commandButton value="Approuver" icon="pi pi-check" action="#{congeController.approuverConge(conge.idConge)}" update=":congeListForm:congeTable" rendered="#{conge.statut eq 'EN_ATTENTE'}" style="color: green;" />
-                            <p:commandButton value="Rejeter" icon="pi pi-times" action="#{congeController.rejeterConge(conge.idConge)}" update=":congeListForm:congeTable" rendered="#{conge.statut eq 'EN_ATTENTE'}" style="color: red;" />
+                            <p:commandButton value="Approuver" icon="pi pi-check" action="#{congeController.approuverConge(conge.idConge)}" id="btnForm1" process="@this" ajax="false" style="color: green;">
+                                <f:setPropertyActionListener target="#{congeController.selectedConge}" value="#{conge}"  />
+                                <f:ajax execute="@this" render="@form"/>
+                            </p:commandButton>
+                            <p:commandButton value="Rejeter" icon="pi pi-times" action="#{congeController.rejeterConge(conge.idConge)}" id="btnForm" process="@this" ajax="false"  style="color: red;">
+                                <f:setPropertyActionListener target="#{congeController.selectedConge}" value="#{conge}"  />
+                                <f:ajax execute="@this" render="@form"/>
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </p:panel>

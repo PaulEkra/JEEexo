@@ -17,5 +17,4 @@ public interface EmployeService {
 
     Employe getEmployeByCourriel(String courriel);
 
-
 }

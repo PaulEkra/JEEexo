@@ -1,7 +1,9 @@
 package com.example.applicationgestinemployes.controller;
 
 import com.example.applicationgestinemployes.model.Employe;
+import com.example.applicationgestinemployes.model.Responsable;
 import com.example.applicationgestinemployes.service.EmployeService;
+import com.example.applicationgestinemployes.service.ResponsableService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -24,6 +26,9 @@ public class EmployeController implements Serializable {
     @Inject
     private EmployeService employeService;
 
+    @Inject
+    private  ResponsableService responsableService;
+
     private transient List<Employe> employes;
     private Employe selectedEmploye = new Employe();
 
@@ -43,9 +48,19 @@ public class EmployeController implements Serializable {
     }
 
     public void addEmploye() {
-        employeService.addEmploye(selectedEmploye);
-        selectedEmploye = new Employe(); // Reset
-        init(); // Recharger la liste des employés
+        Responsable responsable = getLoggedInResponsable();
+        if (responsable != null) {
+            selectedEmploye.setResponsable(responsable);
+            employeService.addEmploye(selectedEmploye);
+            selectedEmploye = new Employe(); // Reset
+            init(); // Recharger la liste des employés
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Employé enregistré."));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Employé non enregistré. Responsable non trouvé."));
+        }
     }
 
     @Transactional
@@ -105,5 +120,12 @@ public class EmployeController implements Serializable {
 
     public Map<String, Long> getEmployeDistributionByPoste() {
         return employeDistributionByPoste;
+    }
+    public Responsable getLoggedInResponsable() {
+        String username = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        if (username != null) {
+            return responsableService.findByCourriel(username);
+        }
+        return null;
     }
 }
